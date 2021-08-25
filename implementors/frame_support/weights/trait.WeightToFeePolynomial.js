@@ -1,0 +1,5 @@
+(function() {var implementors = {};
+implementors["statemine_runtime"] = [{"text":"impl WeightToFeePolynomial for <a class=\"struct\" href=\"statemine_runtime/constants/fee/struct.WeightToFee.html\" title=\"struct statemine_runtime::constants::fee::WeightToFee\">WeightToFee</a>","synthetic":false,"types":["statemine_runtime::constants::fee::WeightToFee"]}];
+implementors["statemint_runtime"] = [{"text":"impl WeightToFeePolynomial for <a class=\"struct\" href=\"statemint_runtime/constants/fee/struct.WeightToFee.html\" title=\"struct statemint_runtime::constants::fee::WeightToFee\">WeightToFee</a>","synthetic":false,"types":["statemint_runtime::constants::fee::WeightToFee"]}];
+implementors["westmint_runtime"] = [{"text":"impl WeightToFeePolynomial for <a class=\"struct\" href=\"westmint_runtime/constants/fee/struct.WeightToFee.html\" title=\"struct westmint_runtime::constants::fee::WeightToFee\">WeightToFee</a>","synthetic":false,"types":["westmint_runtime::constants::fee::WeightToFee"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

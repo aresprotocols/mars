@@ -1,0 +1,9 @@
+(function() {var implementors = {};
+implementors["cumulus_test_runtime"] = [{"text":"impl OriginTrait for <a class=\"struct\" href=\"cumulus_test_runtime/struct.Origin.html\" title=\"struct cumulus_test_runtime::Origin\">Origin</a>","synthetic":false,"types":["cumulus_test_runtime::Origin"]}];
+implementors["cumulus_test_runtime_upgrade"] = [{"text":"impl OriginTrait for <a class=\"struct\" href=\"cumulus_test_runtime_upgrade/struct.Origin.html\" title=\"struct cumulus_test_runtime_upgrade::Origin\">Origin</a>","synthetic":false,"types":["cumulus_test_runtime_upgrade::Origin"]}];
+implementors["rococo_runtime"] = [{"text":"impl OriginTrait for <a class=\"struct\" href=\"rococo_runtime/struct.Origin.html\" title=\"struct rococo_runtime::Origin\">Origin</a>","synthetic":false,"types":["rococo_runtime::Origin"]}];
+implementors["shell_runtime"] = [{"text":"impl OriginTrait for <a class=\"struct\" href=\"shell_runtime/struct.Origin.html\" title=\"struct shell_runtime::Origin\">Origin</a>","synthetic":false,"types":["shell_runtime::Origin"]}];
+implementors["statemine_runtime"] = [{"text":"impl OriginTrait for <a class=\"struct\" href=\"statemine_runtime/struct.Origin.html\" title=\"struct statemine_runtime::Origin\">Origin</a>","synthetic":false,"types":["statemine_runtime::Origin"]}];
+implementors["statemint_runtime"] = [{"text":"impl OriginTrait for <a class=\"struct\" href=\"statemint_runtime/struct.Origin.html\" title=\"struct statemint_runtime::Origin\">Origin</a>","synthetic":false,"types":["statemint_runtime::Origin"]}];
+implementors["westmint_runtime"] = [{"text":"impl OriginTrait for <a class=\"struct\" href=\"westmint_runtime/struct.Origin.html\" title=\"struct westmint_runtime::Origin\">Origin</a>","synthetic":false,"types":["westmint_runtime::Origin"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

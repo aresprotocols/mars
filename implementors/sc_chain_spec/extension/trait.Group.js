@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["cumulus_test_service"] = [{"text":"impl Group for <a class=\"struct\" href=\"cumulus_test_service/struct.Extensions.html\" title=\"struct cumulus_test_service::Extensions\">Extensions</a>","synthetic":false,"types":["cumulus_test_service::chain_spec::Extensions"]}];
+implementors["polkadot_collator"] = [{"text":"impl Group for <a class=\"struct\" href=\"polkadot_collator/chain_spec/struct.Extensions.html\" title=\"struct polkadot_collator::chain_spec::Extensions\">Extensions</a>","synthetic":false,"types":["polkadot_collator::chain_spec::Extensions"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

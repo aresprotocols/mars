@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["cumulus_client_service"] = [{"text":"impl&lt;C&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/1.54.0/core/ops/deref/trait.Deref.html\" title=\"trait core::ops::deref::Deref\">Deref</a> for <a class=\"struct\" href=\"cumulus_client_service/struct.RFullNode.html\" title=\"struct cumulus_client_service::RFullNode\">RFullNode</a>&lt;C&gt;","synthetic":false,"types":["cumulus_client_service::RFullNode"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
