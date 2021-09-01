@@ -72,10 +72,21 @@ pub fn get_chain_spec(id: ParaId) -> ChainSpec {
 		move || {
 			testnet_genesis(
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
+				// initial collators.
 				vec![
-					get_from_seed::<AuraId>("Alice"),
-					get_from_seed::<AuraId>("Bob"),
+					(
+						get_account_id_from_seed::<sr25519::Public>("Alice"),
+						get_collator_keys_from_seed("Alice"),
+					),
+					(
+						get_account_id_from_seed::<sr25519::Public>("Bob"),
+						get_collator_keys_from_seed("Bob"),
+					),
 				],
+				// vec![
+				// 	get_from_seed::<AuraId>("Alice"),
+				// 	get_from_seed::<AuraId>("Bob"),
+				// ],
 				vec![
 					get_account_id_from_seed::<sr25519::Public>("Alice"),
 					get_account_id_from_seed::<sr25519::Public>("Bob"),
@@ -129,14 +140,25 @@ pub fn staging_test_net(id: ParaId) -> ChainSpec {
 		move || {
 			testnet_genesis(
 				hex!["9ed7705e3c7da027ba0583a22a3212042f7e715d3c168ba14f1424e2bc111d00"].into(),
+				// initial collators.
 				vec![
-					// $secret//one
-					hex!["aad9fa2249f87a210a0f93400b7f90e47b810c6d65caa0ca3f5af982904c2a33"]
-						.unchecked_into(),
-					// $secret//two
-					hex!["d47753f0cca9dd8da00c70e82ec4fc5501a69c49a5952a643d18802837c88212"]
-						.unchecked_into(),
+					(
+						get_account_id_from_seed::<sr25519::Public>("Alice"),
+						get_collator_keys_from_seed("Alice"),
+					),
+					(
+						get_account_id_from_seed::<sr25519::Public>("Bob"),
+						get_collator_keys_from_seed("Bob"),
+					),
 				],
+				// vec![
+				// 	// $secret//one
+				// 	hex!["aad9fa2249f87a210a0f93400b7f90e47b810c6d65caa0ca3f5af982904c2a33"]
+				// 		.unchecked_into(),
+				// 	// $secret//two
+				// 	hex!["d47753f0cca9dd8da00c70e82ec4fc5501a69c49a5952a643d18802837c88212"]
+				// 		.unchecked_into(),
+				// ],
 				vec![
 					hex!["9ed7705e3c7da027ba0583a22a3212042f7e715d3c168ba14f1424e2bc111d00"].into(),
 				],
@@ -156,7 +178,8 @@ pub fn staging_test_net(id: ParaId) -> ChainSpec {
 
 fn testnet_genesis(
 	root_key: AccountId,
-	initial_authorities: Vec<AuraId>,
+	invulnerables: Vec<(AccountId, AuraId)>,
+	// initial_authorities: Vec<AuraId>,
 	endowed_accounts: Vec<AccountId>,
 	id: ParaId,
 ) -> rococo_parachain_runtime::GenesisConfig {
@@ -174,11 +197,31 @@ fn testnet_genesis(
 				.map(|k| (k, 1 << 60))
 				.collect(),
 		},
-		sudo: rococo_parachain_runtime::SudoConfig { key: root_key },
+		sudo: rococo_parachain_runtime::SudoConfig { key: root_key.clone() },
 		parachain_info: rococo_parachain_runtime::ParachainInfoConfig { parachain_id: id },
-		aura: rococo_parachain_runtime::AuraConfig {
-			authorities: initial_authorities,
+		// aura: rococo_parachain_runtime::AuraConfig {
+		// 	authorities: initial_authorities.clone(),
+		// },
+		collator_selection: rococo_parachain_runtime::CollatorSelectionConfig {
+			invulnerables: invulnerables.iter().cloned().map(|(acc, _)| acc).collect(),
+			candidacy_bond: ARES_ED * 16,
+			..Default::default()
 		},
+		session: rococo_parachain_runtime::SessionConfig {
+			keys: invulnerables
+				.iter()
+				.cloned()
+				.map(|(acc, aura)| {
+					(
+						acc.clone(),                  // account id
+						acc.clone(),                  // validator id
+						rococo_parachain_runtime::SessionKeys { aura }, // session keys
+					)
+				})
+				.collect(),
+
+		},
+		aura: Default::default(),
 		aura_ext: Default::default(),
 		parachain_system: Default::default(),
 	}
@@ -210,6 +253,9 @@ pub type WestmintChainSpec =
 const STATEMINT_ED: StatemintBalance = statemint_runtime::constants::currency::EXISTENTIAL_DEPOSIT;
 const STATEMINE_ED: StatemintBalance = statemine_runtime::constants::currency::EXISTENTIAL_DEPOSIT;
 const WESTMINT_ED: StatemintBalance = westmint_runtime::constants::currency::EXISTENTIAL_DEPOSIT;
+const ARES_ED: StatemintBalance = westmint_runtime::constants::currency::EXISTENTIAL_DEPOSIT;
+
+
 
 /// Helper function to generate a crypto pair from seed
 pub fn get_pair_from_seed<TPublic: Public>(seed: &str) -> <TPublic::Pair as Pair>::Public {

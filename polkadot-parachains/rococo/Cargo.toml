@@ -48,6 +48,7 @@ cumulus-pallet-dmp-queue = { path = "../../pallets/dmp-queue", default-features 
 cumulus-pallet-xcmp-queue = { path = "../../pallets/xcmp-queue", default-features = false }
 cumulus-pallet-xcm = { path = "../../pallets/xcm", default-features = false }
 cumulus-ping = { path = "../pallets/ping", default-features = false }
+pallet-ocw = { version = "3.0.0", default-features = false,  package = "pallet-ocw", path= "../../pallets/pallet-ocw" }
 
 # Polkadot dependencies
 polkadot-parachain = { git = "https://github.com/paritytech/polkadot", default-features = false, branch = "master" }
@@ -55,6 +56,11 @@ xcm = { git = "https://github.com/paritytech/polkadot", default-features = false
 xcm-builder = { git = "https://github.com/paritytech/polkadot", default-features = false, branch = "master" }
 xcm-executor = { git = "https://github.com/paritytech/polkadot", default-features = false, branch = "master" }
 pallet-xcm = { git = "https://github.com/paritytech/polkadot", default-features = false, branch = "master" }
+pallet-authorship = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master"  }
+pallet-session = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master"  }
+pallet-collator-selection = { path = "../../pallets/collator-selection", default-features = false }
+pallet-indices = { git = "https://github.com/paritytech/substrate.git", default-features = false, branch = "master" }
+
 
 [dev-dependencies]
 hex-literal = "0.3.1"
@@ -104,4 +110,10 @@ std = [
 	"xcm-executor/std",
 	"pallet-aura/std",
 	"sp-consensus-aura/std",
+
+	"pallet-collator-selection/std",
+	"pallet-ocw/std",
+	"pallet-authorship/std",
+	"pallet-session/std",
+	"pallet-indices/std",
 ]

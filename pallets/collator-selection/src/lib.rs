@@ -242,6 +242,7 @@ pub mod pallet {
 
 			<DesiredCandidates<T>>::put(&self.desired_candidates);
 			<CandidacyBond<T>>::put(&self.candidacy_bond);
+			log::info!("$$$$$$$$$$ lindebug:: {:?} GenesisBuild &self.invulnerables ", &self.invulnerables);
 			<Invulnerables<T>>::put(&self.invulnerables);
 		}
 	}
@@ -334,6 +335,7 @@ pub mod pallet {
 			ensure!(!Self::invulnerables().contains(&who), Error::<T>::AlreadyInvulnerable);
 
 			let validator_key = T::ValidatorIdOf::convert(who.clone()).ok_or(Error::<T>::NoAssociatedValidatorId)?;
+			// TODO:: where is the ValidatorRegistration set?
 			ensure!(T::ValidatorRegistration::is_registered(&validator_key), Error::<T>::ValidatorNotRegistered);
 
 			let deposit = Self::candidacy_bond();
@@ -397,10 +399,16 @@ pub mod pallet {
 		/// Kicks out and candidates that did not produce a block in the kick threshold.
 		pub fn kick_stale_candidates(candidates: Vec<CandidateInfo<T::AccountId, BalanceOf<T>>>) -> Vec<T::AccountId> {
 			let now = frame_system::Pallet::<T>::block_number();
+			log::info!("===== lindebug:: {:?} ## frame_system::Pallet::<T>::block_number()", now.clone());
 			let kick_threshold = T::KickThreshold::get();
+			log::info!("===== lindebug:: {:?} ## T::KickThreshold::get()", kick_threshold.clone());
 			let new_candidates = candidates.into_iter().filter_map(|c| {
 				let last_block = <LastAuthoredBlock<T>>::get(c.who.clone());
 				let since_last = now.saturating_sub(last_block);
+
+				log::info!("===== lindebug::for-map::A {:?},{:?}, ## last_block, kick_threshold ", last_block.clone(), since_last.clone());
+				log::info!("===== lindebug::for-map::B {:?},{:?}, ## Self::candidates().len(), T::MinCandidates::get() ", Self::candidates().len(), T::MinCandidates::get());
+
 				if since_last < kick_threshold || Self::candidates().len() as u32 <= T::MinCandidates::get() {
 					Some(c.who)
 				} else {
@@ -451,10 +459,13 @@ pub mod pallet {
 			);
 
 			let candidates = Self::candidates();
+			log::info!("++++++++ lindebug:: {:?} ## All candidates ", candidates);
 			let candidates_len_before = candidates.len();
 			let active_candidates = Self::kick_stale_candidates(candidates);
+			log::info!("++++++++ lindebug:: {:?} ## that still exists active_candidates after deletion.", active_candidates);
 			let active_candidates_len = active_candidates.len();
 			let result = Self::assemble_collators(active_candidates);
+			log::info!("++++++++ lindebug:: {:?} ## Self::assemble_collators(active_candidates) ", result);
 			let removed = candidates_len_before - active_candidates_len;
 
 			frame_system::Pallet::<T>::register_extra_weight_unchecked(

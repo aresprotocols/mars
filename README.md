@@ -121,3 +121,10 @@ cargo build --release
 ```
 ### Register the parachain
 ![image](https://user-images.githubusercontent.com/2915325/99548884-1be13580-2987-11eb-9a8b-20be658d34f9.png)
+
+
+### --
+./target/release/polkadot-collator --collator --base-path data --parachain-id 2008 --port 40335 --ws-port 9946
+ -- --execution wasm 单节点不加后面的 --chain kusama --port 30335
+
+./target/release/polkadot-collator --collator --chain=westmint-dev --tmp --parachain-id 2008 --port 40335 --ws-port 9946

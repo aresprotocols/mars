@@ -34,6 +34,7 @@ use sp_std::prelude::*;
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
+use sp_runtime::SaturatedConversion;
 
 // A few exports that help ease life for downstream crates.
 pub use frame_support::{
@@ -65,6 +66,9 @@ use xcm_builder::{
 	SovereignSignedViaLocation, TakeWeightCredit, UsingComponents,
 };
 use xcm_executor::{Config, XcmExecutor};
+use sp_runtime::generic::Era;
+use frame_support::sp_runtime::traits;
+use cumulus_primitives_core::relay_chain::AccountIndex;
 
 pub type SessionHandlers = ();
 
@@ -73,6 +77,14 @@ impl_opaque_keys! {
 		pub aura: Aura,
 	}
 }
+
+mod weights;
+
+mod part_ocw;
+mod part_authorship;
+mod part_session_and_collatorselection;
+// mod part_collator_selection;
+// mod part_indices;
 
 /// This runtime version.
 #[sp_version::runtime_version]
@@ -147,6 +159,7 @@ parameter_types! {
 		.build_or_panic();
 	pub const SS58Prefix: u8 = 42;
 }
+
 
 impl frame_system::Config for Runtime {
 	/// The identifier used to distinguish between accounts.
@@ -453,16 +466,27 @@ construct_runtime! {
 		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>} = 30,
 		Assets: pallet_assets::{Pallet, Call, Storage, Event<T>} = 31,
 
-		Aura: pallet_aura::{Pallet, Config<T>},
-		AuraExt: cumulus_pallet_aura_ext::{Pallet, Config},
+		// Session: pallet_session::{Pallet, Call, Storage, Event, Config<T>},
+		// Aura: pallet_aura::{Pallet, Config<T>},
+		// AuraExt: cumulus_pallet_aura_ext::{Pallet, Config},
+
+		// Ares the order of these 4 are important and shall not change.
+		Authorship: pallet_authorship::{Pallet, Call, Storage, Inherent},
+		CollatorSelection: pallet_collator_selection::{Pallet, Call, Storage, Event<T>, Config<T>},
+		Session: pallet_session::{Pallet, Call, Storage, Event, Config<T>},
+		Aura: pallet_aura::{Pallet, Storage, Config<T>},
+		AuraExt: cumulus_pallet_aura_ext::{Pallet, Storage, Config},
 
 		// XCM helpers.
 		XcmpQueue: cumulus_pallet_xcmp_queue::{Pallet, Call, Storage, Event<T>} = 50,
 		PolkadotXcm: pallet_xcm::{Pallet, Call, Event<T>, Origin} = 51,
 		CumulusXcm: cumulus_pallet_xcm::{Pallet, Call, Event<T>, Origin} = 52,
 		DmpQueue: cumulus_pallet_dmp_queue::{Pallet, Call, Storage, Event<T>} = 53,
-
 		Spambot: cumulus_ping::{Pallet, Call, Storage, Event<T>} = 99,
+
+
+
+		OCWModule: pallet_ocw::{Pallet, Call, Storage, Event<T>, ValidateUnsigned},
 	}
 }
 
@@ -481,6 +505,7 @@ pub type Hash = sp_core::H256;
 pub type BlockNumber = u32;
 /// The address format for describing accounts.
 pub type Address = sp_runtime::MultiAddress<AccountId, ()>;
+// TODO:: pos use AccountIndex :: pub type Address = sp_runtime::MultiAddress<AccountId, AccountIndex>;
 /// Block header type as expected by this runtime.
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 /// Block type as expected by this runtime.

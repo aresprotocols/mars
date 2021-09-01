@@ -1,0 +1,16 @@
+use super::*;
+
+use pallet_indices;
+
+parameter_types! {
+	pub const IndexDeposit: Balance = 1 * MILLIROC;// TODO:: Replace DOLLARS;
+}
+
+impl pallet_indices::Config for Runtime {
+    type AccountIndex = AccountIndex; // TODO:: POS use AccountIndex ,but current parachain not .
+    // type AccountIndex = (); // TODO:: Not work
+    type Currency = Balances;
+    type Deposit = IndexDeposit;
+    type Event = Event;
+    type WeightInfo = pallet_indices::weights::SubstrateWeight<Runtime>;
+}
