@@ -18,7 +18,8 @@ frame-support = {  default-features = false, git = "https://github.com/paritytec
 
 frame-system = {  default-features = false, git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-core = {  default-features = false, git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-keystore = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate", branch = "master", optional = true }
+#sp-keystore = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate", branch = "master", optional = true }
+sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master", optional = true } # New
 sp-io = {  default-features = false, git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-runtime = {  default-features = false, git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-std = {  default-features = false, git = "https://github.com/paritytech/substrate", branch = "master"  }

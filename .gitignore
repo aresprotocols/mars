@@ -9,3 +9,4 @@ polkadot_argument_parsing
 /data
 **/*.private.md
 /test-relay-chain-rococo
+/test-relay-chain-rococo.mov
