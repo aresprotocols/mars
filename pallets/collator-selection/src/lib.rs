@@ -242,7 +242,7 @@ pub mod pallet {
 
 			<DesiredCandidates<T>>::put(&self.desired_candidates);
 			<CandidacyBond<T>>::put(&self.candidacy_bond);
-			log::info!("$$$$$$$$$$ lindebug:: {:?} GenesisBuild &self.invulnerables ", &self.invulnerables);
+			log::info!("$$$$$$$$$$v2 lindebug:: {:?} GenesisBuild &self.invulnerables ", &self.invulnerables);
 			<Invulnerables<T>>::put(&self.invulnerables);
 		}
 	}

@@ -131,6 +131,9 @@ pub mod pallet {
         /// multiple pallets send unsigned transactions.
         #[pallet::constant]
         type UnsignedPriority: Get<TransactionPriority>;
+
+        #[pallet::constant]
+        type PalletVersion: Get<u32>;
     }
 
     #[pallet::pallet]
@@ -138,12 +141,12 @@ pub mod pallet {
     pub struct Pallet<T>(_);
 
     #[pallet::hooks]
-    // impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T>
     impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T>
         where sp_runtime::AccountId32: From<<T as frame_system::Config>::AccountId>
     {
         /// You can use `Local Storage` API to coordinate runs of the worker.
         fn offchain_worker(block_number: T::BlockNumber) {
+            log::info!("Ares offchain is on offchain_worker.");
             if Self::are_block_author_and_sotre_key_the_same() {
                 // Try to get ares price.
                 match Self::ares_price_worker(block_number) {
@@ -151,6 +154,12 @@ pub mod pallet {
                     Err(e) => log::warn!("ERROR:: Ares price has a problem : {:?}", e),
                 }
             }
+        }
+
+        fn on_initialize(_: T::BlockNumber) -> Weight {
+            log::info!("Ares offchain on initialize.");
+            <PalletVersion<T>>::put(T::PalletVersion::get());
+            0
         }
     }
 
@@ -283,6 +292,10 @@ pub mod pallet {
         ValueQuery
     >;
 
+    #[pallet::storage]
+    #[pallet::getter(fn pallet_version)]
+    pub(super) type PalletVersion<T: Config> = StorageValue<_, u32, ValueQuery>;
+
     /// Defines the block when next unsigned transaction will be accepted.
     ///
     /// To prevent spam of unsigned (and unpayed!) transactions on the network,
@@ -312,7 +325,8 @@ impl<T: Config> Pallet<T>
     where sp_runtime::AccountId32: From<<T as frame_system::Config>::AccountId>
 {
     fn are_block_author_and_sotre_key_the_same() -> bool {
-        let mut is_same = false;
+        // if test set true.
+        let mut is_same = true;
         let worker_ownerid_list = T::AuthorityAres::all();
         for ownerid in worker_ownerid_list.iter() {
             let mut a = [0u8; 32];
@@ -398,15 +412,19 @@ impl<T: Config> Pallet<T>
             return Err(http::Error::Unknown);
         }
 
-        log::info!("Go to fetch_price_of_ares ");
+        log::info!("Go to fetch_price_of_ares A");
         let deadline = sp_io::offchain::timestamp().add(Duration::from_millis(4_000));
         let request = http::Request::get(
             request_url.clone()
         );
+        log::info!("Go to fetch_price_of_ares B");
+
         let pending = request
             .deadline(deadline)
             .send()
             .map_err(|_| http::Error::IoError)?;
+
+        log::info!("Go to fetch_price_of_ares C");
         let response = pending.try_wait(deadline)
             .map_err(|e| {
                 log::warn!("ERROR:: The network cannot connect. http::Error::DeadlineReached == {:?} ", e);

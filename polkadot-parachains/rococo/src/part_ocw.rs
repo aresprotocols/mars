@@ -6,10 +6,12 @@ use frame_support::pallet_prelude::Encode;
 use sp_runtime::traits::StaticLookup;
 
 
+
 parameter_types! {
 	pub const GracePeriod: BlockNumber = 5;
 	pub const UnsignedInterval: u32 = 10;
 	pub const UnsignedPriority: u64 = 1 << 20;
+    pub const OcwVersion: u32 = 101;
 }
 
 impl pallet_ocw::Config for Runtime {
@@ -20,6 +22,7 @@ impl pallet_ocw::Config for Runtime {
     type GracePeriod = GracePeriod;
     type UnsignedInterval = UnsignedInterval;
     type UnsignedPriority = UnsignedPriority;
+    type PalletVersion = OcwVersion;
 }
 
 impl frame_system::offchain::SigningTypes for Runtime {

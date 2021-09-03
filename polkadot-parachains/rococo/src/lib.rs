@@ -340,12 +340,25 @@ match_type! {
 	};
 }
 
+// match_type! {
+// 	pub type SpecParachain: impl Contains<MultiLocation> = {
+// 		X2(Parent, Parachain(2000)) | X2(Parent, Parachain(2001))
+// 	};
+// }
+
 pub type Barrier = (
 	TakeWeightCredit,
 	AllowTopLevelPaidExecutionFrom<Everything>,
 	AllowUnpaidExecutionFrom<ParentOrParentsUnitPlurality>,
 	// ^^^ Parent & its unit plurality gets free execution
 );
+
+// pub type Barrier = (
+// 	TakeWeightCredit,
+// 	AllowTopLevelPaidExecutionFrom<All<MultiLocation>>,
+// 	AllowUnpaidExecutionFrom<ParentOrParentsUnitPlurality>,
+// 	AllowUnpaidExecutionFrom<SpecParachain>,
+// );
 
 pub struct XcmConfig;
 impl Config for XcmConfig {
@@ -589,6 +602,7 @@ impl_runtime_apis! {
 
 	impl sp_offchain::OffchainWorkerApi<Block> for Runtime {
 		fn offchain_worker(header: &<Block as BlockT>::Header) {
+			log::info!("Offchain LINDEBUG:: - worker sp_offchain::OffchainWorkerApi<Block> for Runtime ON rococo");
 			Executive::offchain_worker(header)
 		}
 	}

@@ -138,6 +138,8 @@ https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9951#/explorer
 
 ## 整理后：
 
+* 中继链代码目录：/Users/mac/work-files/coding/git-files/ke-fan/ares-mars/test-relay-chain-rococo
+
 ## 中继链部分
 ### 下载并编译中继链
 ```json
@@ -146,17 +148,136 @@ git fetch
 cargo build --release
 ```
 
-### 生成原生 chain spec
-./target/release/polkadot build-spec --chain rococo-local --disable-default-bootnode --raw > rococo-local-cfde.json
+### 生成中继链原生 chain spec
+./target/release/polkadot build-spec \
+    --chain rococo-local \
+    --disable-default-bootnode \
+    --raw > rococo-local.json
 
-### 启动 Alice 节点
-./target/release/polkadot --chain rococo-local-cfde.json --alice --tmp
+#运行两个节点
+
+### 清除节点的垃圾数据
+rm -rf /tmp/rococo
+
+### 启动 Alice 节点，中继链
+
+./target/release/polkadot \
+    --name alice \
+    --chain rococo-local.json \
+    --alice \
+    -d /tmp/rococo/alice \
+    --ws-external \
+    --rpc-external \
+    --rpc-cors all \
+    --port 30333 \
+    --ws-port 9944 \
+    --rpc-port 9933 \
+    --node-key 0000000000000000000000000000000000000000000000000000000000000001
+
+
 
 ### 启动 Bob 节点
-./target/release/polkadot --chain rococo-local-cfde.json --bob --tmp --port 30334
+
+./target/release/polkadot \
+    --name bob \
+    --chain rococo-local \
+    --bob \
+    -d /tmp/rococo/bob \
+    --ws-external \
+    --rpc-external \
+    --rpc-cors all \
+    --port 30334 \
+    --ws-port 9945 \
+    --rpc-port 9934 \
+    --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
 
 ## 平行链部分
-### 导出链配置文件
+### 修改
+* 这不分没有做，因为改了报错而且暂时工作需求用不到。
+
+### 编译
+ * cargo build --release -p polkadot-collator
+
+### 清除链数据
+* rm -rf /tmp/rococo-parachain
+
+### 导出genesis state和wasm文件
+```text
+./target/release/polkadot-collator export-genesis-wasm > genesis-wasm
+./target/release/polkadot-collator export-genesis-state --parachain-id 2000 > genesis-state-2000
+./target/release/polkadot-collator export-genesis-state --parachain-id 2001 > genesis-state-2001
+```
+
+#启动两条平行链
+```
+RUST_LOG=runtime=debug ./target/release/polkadot-collator \
+    -d /tmp/rococo-parachain/2000 \
+    --collator \
+    --alice \
+    --force-authoring \
+    --port 40557 \
+    --ws-port 9951 \
+    --rpc-port 9960 \
+    --parachain-id 2000 \
+    --ws-external \
+    --rpc-cors all \
+    --rpc-methods=unsafe \
+    -- \
+    --execution wasm \
+    --chain test-relay-chain-rococo/rococo-local.json \
+    --port 40558 \
+    --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+
+```
+```
+RUST_LOG=runtime=debug ./target/release/polkadot-collator \
+    -d /tmp/rococo-parachain/2001 \
+    --collator \
+    --bob \
+    --force-authoring \
+    --port 40558 \
+    --ws-port 9952 \
+    --rpc-port 9961 \
+    --parachain-id 2001 \
+    --ws-external \
+    --rpc-cors all \
+    --rpc-methods=unsafe \
+    -- \
+    --execution wasm \
+    --chain test-relay-chain-rococo/rococo-local.json \
+    --port 40559 \
+    --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+```
+
+
+## UI 访问节点并加入平行链节点
+
+* https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/sudo 
+* parasSudoWrapper->sudoScheduleParaInitialize
+```
+id： 2000
+genesisHead：选择生成的 genesis-state-2000
+validationCode：选择生成的 genesis-wasm
+paraChain: Yes
+然后提交
+```
+
+```
+id： 2001
+genesisHead：选择生成的 genesis-state-2001
+validationCode：选择生成的 genesis-wasm
+paraChain: Yes
+然后提交
+```
+
+``` ocw session 
+curl http://localhost:9960  -H "Content-Type:application/json;charset=utf-8" -d "@ocw1.curl"
+
+```
+### 建立 Hrmp 通道
+* https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/sudo
+* parasSudoWrapper->sudoEstablishHrmpChannel
+
 
 ./target/release/polkadot build-spec --chain=rococo-local --disable-default-bootnode --raw > rococo-local.json
 

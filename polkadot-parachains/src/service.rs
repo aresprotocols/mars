@@ -239,6 +239,8 @@ where
 		other: (telemetry, telemetry_worker_handle),
 	};
 
+
+
 	Ok(params)
 }
 
@@ -543,6 +545,17 @@ where
 		})
 	};
 
+
+	// ares required
+	if parachain_config.offchain_worker.enabled {
+		sc_service::build_offchain_workers(
+			&parachain_config,
+			task_manager.spawn_handle(),
+			client.clone(),
+			network.clone(),
+		);
+	}
+
 	sc_service::spawn_tasks(sc_service::SpawnTasksParams {
 		on_demand: None,
 		remote_blockchain: None,
@@ -678,6 +691,7 @@ pub async fn start_rococo_parachain_node(
 		>,
 	>,
 )> {
+
 	start_node_impl::<rococo_parachain_runtime::RuntimeApi, RococoParachainRuntimeExecutor, _, _, _>(
 		parachain_config,
 		polkadot_config,

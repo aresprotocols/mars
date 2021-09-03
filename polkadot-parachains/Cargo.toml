@@ -93,7 +93,9 @@ assert_cmd = "0.12"
 nix = "0.17"
 rand = "0.7.3"
 tempfile = "3.2.0"
+# TODO:: fix bug must be called from the context of a Tokio 1.x runtime
 tokio = { version = "0.2.13", features = ["macros"] }
+#tokio = { version = "1.4.0", features = ["time"] }
 
 [features]
 default = []

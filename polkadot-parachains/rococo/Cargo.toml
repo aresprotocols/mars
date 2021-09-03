@@ -48,7 +48,7 @@ cumulus-pallet-dmp-queue = { path = "../../pallets/dmp-queue", default-features 
 cumulus-pallet-xcmp-queue = { path = "../../pallets/xcmp-queue", default-features = false }
 cumulus-pallet-xcm = { path = "../../pallets/xcm", default-features = false }
 cumulus-ping = { path = "../pallets/ping", default-features = false }
-pallet-ocw = { version = "3.0.0", default-features = false,  package = "pallet-ocw", path= "../../pallets/pallet-ocw" }
+
 
 # Polkadot dependencies
 polkadot-parachain = { git = "https://github.com/paritytech/polkadot", default-features = false, branch = "master" }
@@ -60,7 +60,7 @@ pallet-authorship = { default-features = false, git = "https://github.com/parity
 pallet-session = { default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "master"  }
 pallet-collator-selection = { path = "../../pallets/collator-selection", default-features = false }
 pallet-indices = { git = "https://github.com/paritytech/substrate.git", default-features = false, branch = "master" }
-
+pallet-ocw = { version = "3.0.0", default-features = false,  package = "pallet-ocw", path= "../../pallets/pallet-ocw" }
 
 [dev-dependencies]
 hex-literal = "0.3.1"
