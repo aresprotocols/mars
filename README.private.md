@@ -166,15 +166,16 @@ rm -rf /tmp/rococo
     --chain rococo-local.json \
     --alice \
     -d /tmp/rococo/alice \
-    --ws-external \
-    --rpc-external \
-    --rpc-cors all \
+    --unsafe-rpc-external \
+    --unsafe-ws-external \
+    --rpc-cors all
     --port 30333 \
     --ws-port 9944 \
     --rpc-port 9933 \
     --node-key 0000000000000000000000000000000000000000000000000000000000000001
 
-
+[comment]: <> (--rpc-cors all \)
+[comment]: <> (--ws-external \)
 
 ### 启动 Bob 节点
 
