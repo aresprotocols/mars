@@ -11,6 +11,11 @@ codec = { package = "parity-scale-codec", version = "2.0.0", default-features = 
 log = { version = "0.4.14", default-features = false }
 parachain-info = { path = "../pallets/parachain-info", default-features = false }
 
+pallet-author-inherent = { git = "https://github.com/purestake/cumulus", branch = "nimbus-polkadot-v0.9.9", default-features = false }
+nimbus-primitives = { git = "https://github.com/purestake/cumulus", branch = "nimbus-polkadot-v0.9.9", default-features = false }
+pallet-author-slot-filter = { git = "https://github.com/purestake/cumulus", branch = "nimbus-polkadot-v0.9.9", default-features = false }
+pallet-author-mapping = { path = "../pallets/author-mapping", default-features = false }
+
 # Substrate dependencies
 sp-std = { git = "https://github.com/paritytech/substrate", default-features = false, branch = "polkadot-v0.9.9" }
 sp-api = { git = "https://github.com/paritytech/substrate", default-features = false, branch = "polkadot-v0.9.9" }
@@ -140,6 +145,10 @@ std = [
 	"pallet-vesting/std",
 	'pallet-getprice/std',
 	'pallet-price/std',
+	'pallet-author-inherent/std',
 	'parachain-staking/std',
+	'nimbus-primitives/std',
+	'pallet-author-slot-filter/std',
+	'pallet-author-mapping/std',
 #	"pallet-staking/std",
 ]

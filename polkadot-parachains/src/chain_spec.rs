@@ -24,7 +24,7 @@ use sp_core::{crypto::UncheckedInto, sr25519, Pair, Public};
 use sp_runtime::traits::{IdentifyAccount, Verify};
 
 use rococo_parachain_runtime::{
-	CouncilConfig,TechnicalCommitteeConfig,DemocracyConfig,InflationInfo,Balance,Range,ParachainStakingConfig,
+	CouncilConfig,TechnicalCommitteeConfig,DemocracyConfig,InflationInfo,Balance,Range,ParachainStakingConfig,AuthorMappingConfig,
 };
 
 use sp_runtime::Perbill;
@@ -309,6 +309,13 @@ fn testnet_genesis(
 				.collect(),
 			nominations,
 			inflation_config: ares_inflation_config(),
+		},
+		author_mapping: AuthorMappingConfig {
+			mappings: candidates
+				.iter()
+				.cloned()
+				.map(|(account_id, author_id, _)| (author_id, account_id))
+				.collect(),
 		},
 	}
 }

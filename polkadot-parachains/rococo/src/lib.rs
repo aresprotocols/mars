@@ -22,6 +22,7 @@
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
+use cumulus_pallet_parachain_system::RelaychainBlockNumberProvider;
 use sp_api::impl_runtime_apis;
 use sp_core::OpaqueMetadata;
 use sp_runtime::{
@@ -34,6 +35,7 @@ use sp_std::prelude::*;
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
+use nimbus_primitives::{CanAuthor, NimbusId};
 
 // A few exports that help ease life for downstream crates.
 pub use frame_support::{
@@ -528,6 +530,33 @@ impl parachain_staking::Config for Runtime {
 	type WeightInfo = parachain_staking::weights::SubstrateWeight<Runtime>;
 }
 
+// impl pallet_author_inherent::Config for Runtime {
+// 	type AuthorId = NimbusId;
+// 	type SlotBeacon = RelaychainBlockNumberProvider<Self>;
+// 	type AccountLookup = AuthorMapping;
+// 	type EventHandler = ParachainStaking;
+// 	type CanAuthor = AuthorFilter;
+// }
+
+// impl pallet_author_slot_filter::Config for Runtime {
+// 	type Event = Event;
+// 	type RandomnessSource = RandomnessCollectiveFlip;
+// 	type PotentialAuthors = ParachainStaking;
+// }
+
+parameter_types! {
+	pub const DepositAmount: Balance = 100 * AMAS_UNITS;
+}
+// This is a simple session key manager. It should probably either work with, or be replaced
+// entirely by pallet sessions
+impl pallet_author_mapping::Config for Runtime {
+	type Event = Event;
+	type AuthorId = NimbusId;
+	type DepositCurrency = Balances;
+	type DepositAmount = DepositAmount;
+	type WeightInfo = pallet_author_mapping::weights::SubstrateWeight<Runtime>;
+}
+
 construct_runtime! {
 	pub enum Runtime where
 		Block = Block,
@@ -548,8 +577,13 @@ construct_runtime! {
 		
 
 		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>} = 30,
-		ParachainStaking: parachain_staking::{Pallet, Call, Storage, Event<T>, Config<T>} = 31,
-		Assets: pallet_assets::{Pallet, Call, Storage, Event<T>} = 32,
+		Assets: pallet_assets::{Pallet, Call, Storage, Event<T>} = 31,
+
+		//staking
+		ParachainStaking: parachain_staking::{Pallet, Call, Storage, Event<T>, Config<T>} = 32,
+		//AuthorInherent: pallet_author_inherent::{Pallet, Call, Storage, Inherent} = 33,
+		//AuthorFilter: pallet_author_slot_filter::{Pallet, Call, Storage, Event, Config} = 34,
+		AuthorMapping: pallet_author_mapping::{Pallet, Call, Config<T>, Storage, Event<T>} = 35,
 
 		// Ares the order of these 4 are important and shall not change.
 		Authorship: pallet_authorship::{Pallet, Call, Storage, Inherent},
@@ -742,6 +776,7 @@ impl cumulus_pallet_parachain_system::CheckInherents<Block> for CheckInherents {
 
 cumulus_pallet_parachain_system::register_validate_block! {
 	Runtime = Runtime,
-	BlockExecutor = cumulus_pallet_aura_ext::BlockExecutor::<Runtime, Executive>,
+	//BlockExecutor = cumulus_pallet_aura_ext::BlockExecutor::<Runtime, Executive>,
+	BlockExecutor = pallet_author_inherent::BlockExecutor::<Runtime, Executive>,
 	CheckInherents = CheckInherents,
 }

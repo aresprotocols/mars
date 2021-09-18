@@ -1495,7 +1495,7 @@ dependencies = [
  "async-trait",
  "cumulus-client-consensus-common",
  "cumulus-client-network",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-test-client",
  "cumulus-test-runtime",
  "futures 0.3.16",
@@ -1526,7 +1526,7 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "cumulus-client-consensus-common",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "futures 0.3.16",
  "parity-scale-codec",
  "parking_lot 0.10.2",
@@ -1555,7 +1555,7 @@ name = "cumulus-client-consensus-common"
 version = "0.1.0"
 dependencies = [
  "async-trait",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-test-client",
  "cumulus-test-runtime",
  "cumulus-test-service",
@@ -1591,7 +1591,7 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "cumulus-client-consensus-common",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "futures 0.3.16",
  "parity-scale-codec",
  "parking_lot 0.10.2",
@@ -1613,7 +1613,7 @@ dependencies = [
 name = "cumulus-client-network"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-test-service",
  "derive_more 0.99.14",
  "futures 0.3.16",
@@ -1645,7 +1645,7 @@ dependencies = [
 name = "cumulus-client-pov-recovery"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-test-service",
  "futures 0.3.16",
  "futures-timer 3.0.2",
@@ -1679,7 +1679,7 @@ dependencies = [
  "cumulus-client-collator",
  "cumulus-client-consensus-common",
  "cumulus-client-pov-recovery",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "parity-scale-codec",
  "parking_lot 0.10.2",
  "polkadot-overseer",
@@ -1704,7 +1704,7 @@ dependencies = [
 name = "cumulus-pallet-aura-ext"
 version = "0.1.0"
 dependencies = [
- "cumulus-pallet-parachain-system",
+ "cumulus-pallet-parachain-system 0.1.0",
  "frame-executive",
  "frame-support",
  "frame-system",
@@ -1721,7 +1721,7 @@ dependencies = [
 name = "cumulus-pallet-dmp-queue"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "frame-support",
  "frame-system",
  "log",
@@ -1741,11 +1741,11 @@ dependencies = [
 name = "cumulus-pallet-parachain-system"
 version = "0.1.0"
 dependencies = [
- "cumulus-pallet-parachain-system-proc-macro",
- "cumulus-primitives-core",
- "cumulus-primitives-parachain-inherent",
+ "cumulus-pallet-parachain-system-proc-macro 0.1.0",
+ "cumulus-primitives-core 0.1.0",
+ "cumulus-primitives-parachain-inherent 0.1.0",
  "cumulus-test-client",
- "cumulus-test-relay-sproof-builder",
+ "cumulus-test-relay-sproof-builder 0.1.0",
  "environmental",
  "frame-support",
  "frame-system",
@@ -1772,8 +1772,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "cumulus-pallet-parachain-system"
+version = "0.1.0"
+source = "git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9#a214d80d84409be1655f28ff897dfc61f347cfdb"
+dependencies = [
+ "cumulus-pallet-parachain-system-proc-macro 0.1.0 (git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9)",
+ "cumulus-primitives-core 0.1.0 (git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9)",
+ "cumulus-primitives-parachain-inherent 0.1.0 (git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9)",
+ "environmental",
+ "frame-support",
+ "frame-system",
+ "log",
+ "pallet-balances",
+ "parity-scale-codec",
+ "polkadot-parachain",
+ "serde",
+ "sp-core",
+ "sp-externalities",
+ "sp-inherents",
+ "sp-io",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
+ "sp-trie",
+ "sp-version",
+ "xcm",
+]
+
+[[package]]
 name = "cumulus-pallet-parachain-system-proc-macro"
 version = "0.1.0"
+dependencies = [
+ "proc-macro-crate 1.0.0",
+ "proc-macro2 1.0.28",
+ "quote 1.0.9",
+ "syn 1.0.73",
+]
+
+[[package]]
+name = "cumulus-pallet-parachain-system-proc-macro"
+version = "0.1.0"
+source = "git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9#a214d80d84409be1655f28ff897dfc61f347cfdb"
 dependencies = [
  "proc-macro-crate 1.0.0",
  "proc-macro2 1.0.28",
@@ -1802,7 +1841,7 @@ dependencies = [
 name = "cumulus-pallet-xcm"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "frame-support",
  "frame-system",
  "parity-scale-codec",
@@ -1817,8 +1856,8 @@ dependencies = [
 name = "cumulus-pallet-xcmp-queue"
 version = "0.1.0"
 dependencies = [
- "cumulus-pallet-parachain-system",
- "cumulus-primitives-core",
+ "cumulus-pallet-parachain-system 0.1.0",
+ "cumulus-primitives-core 0.1.0",
  "frame-support",
  "frame-system",
  "log",
@@ -1840,7 +1879,7 @@ name = "cumulus-ping"
 version = "0.1.0"
 dependencies = [
  "cumulus-pallet-xcm",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "frame-support",
  "frame-system",
  "parity-scale-codec",
@@ -1868,12 +1907,51 @@ dependencies = [
 ]
 
 [[package]]
+name = "cumulus-primitives-core"
+version = "0.1.0"
+source = "git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9#a214d80d84409be1655f28ff897dfc61f347cfdb"
+dependencies = [
+ "frame-support",
+ "impl-trait-for-tuples",
+ "parity-scale-codec",
+ "polkadot-core-primitives",
+ "polkadot-parachain",
+ "polkadot-primitives",
+ "sp-api",
+ "sp-runtime",
+ "sp-std",
+ "sp-trie",
+ "xcm",
+]
+
+[[package]]
 name = "cumulus-primitives-parachain-inherent"
 version = "0.1.0"
 dependencies = [
  "async-trait",
- "cumulus-primitives-core",
- "cumulus-test-relay-sproof-builder",
+ "cumulus-primitives-core 0.1.0",
+ "cumulus-test-relay-sproof-builder 0.1.0",
+ "parity-scale-codec",
+ "polkadot-client",
+ "sc-client-api",
+ "sp-api",
+ "sp-core",
+ "sp-inherents",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
+ "sp-trie",
+ "tracing",
+]
+
+[[package]]
+name = "cumulus-primitives-parachain-inherent"
+version = "0.1.0"
+source = "git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9#a214d80d84409be1655f28ff897dfc61f347cfdb"
+dependencies = [
+ "async-trait",
+ "cumulus-primitives-core 0.1.0 (git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9)",
+ "cumulus-test-relay-sproof-builder 0.1.0 (git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9)",
  "parity-scale-codec",
  "polkadot-client",
  "sc-client-api",
@@ -1891,9 +1969,9 @@ dependencies = [
 name = "cumulus-primitives-timestamp"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-test-client",
- "cumulus-test-relay-sproof-builder",
+ "cumulus-test-relay-sproof-builder 0.1.0",
  "futures 0.3.16",
  "parity-scale-codec",
  "sp-consensus",
@@ -1908,7 +1986,7 @@ dependencies = [
 name = "cumulus-primitives-utility"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "frame-support",
  "impl-trait-for-tuples",
  "parity-scale-codec",
@@ -1925,9 +2003,9 @@ dependencies = [
 name = "cumulus-test-client"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
- "cumulus-primitives-parachain-inherent",
- "cumulus-test-relay-sproof-builder",
+ "cumulus-primitives-core 0.1.0",
+ "cumulus-primitives-parachain-inherent 0.1.0",
+ "cumulus-test-relay-sproof-builder 0.1.0",
  "cumulus-test-runtime",
  "cumulus-test-service",
  "frame-system",
@@ -1958,7 +2036,20 @@ dependencies = [
 name = "cumulus-test-relay-sproof-builder"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
+ "parity-scale-codec",
+ "polkadot-primitives",
+ "sp-runtime",
+ "sp-state-machine",
+ "sp-std",
+]
+
+[[package]]
+name = "cumulus-test-relay-sproof-builder"
+version = "0.1.0"
+source = "git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9#a214d80d84409be1655f28ff897dfc61f347cfdb"
+dependencies = [
+ "cumulus-primitives-core 0.1.0 (git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9)",
  "parity-scale-codec",
  "polkadot-primitives",
  "sp-runtime",
@@ -1977,8 +2068,8 @@ dependencies = [
 name = "cumulus-test-runtime"
 version = "0.1.0"
 dependencies = [
- "cumulus-pallet-parachain-system",
- "cumulus-primitives-core",
+ "cumulus-pallet-parachain-system 0.1.0",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-primitives-timestamp",
  "frame-executive",
  "frame-support",
@@ -2009,8 +2100,8 @@ dependencies = [
 name = "cumulus-test-runtime-upgrade"
 version = "0.1.0"
 dependencies = [
- "cumulus-pallet-parachain-system",
- "cumulus-primitives-core",
+ "cumulus-pallet-parachain-system 0.1.0",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-primitives-timestamp",
  "frame-executive",
  "frame-support",
@@ -2046,8 +2137,8 @@ dependencies = [
  "cumulus-client-consensus-relay-chain",
  "cumulus-client-network",
  "cumulus-client-service",
- "cumulus-primitives-core",
- "cumulus-primitives-parachain-inherent",
+ "cumulus-primitives-core 0.1.0",
+ "cumulus-primitives-parachain-inherent 0.1.0",
  "cumulus-test-relay-validation-worker-provider",
  "cumulus-test-runtime",
  "cumulus-test-runtime-upgrade",
@@ -5339,6 +5430,60 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-author-inherent"
+version = "0.1.0"
+source = "git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9#a214d80d84409be1655f28ff897dfc61f347cfdb"
+dependencies = [
+ "frame-support",
+ "frame-system",
+ "log",
+ "nimbus-primitives",
+ "parity-scale-codec",
+ "sp-api",
+ "sp-application-crypto",
+ "sp-authorship",
+ "sp-inherents",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
+name = "pallet-author-mapping"
+version = "2.0.3"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "nimbus-primitives",
+ "pallet-balances",
+ "parity-scale-codec",
+ "serde",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
+name = "pallet-author-slot-filter"
+version = "0.1.0"
+source = "git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9#a214d80d84409be1655f28ff897dfc61f347cfdb"
+dependencies = [
+ "cumulus-pallet-parachain-system 0.1.0 (git+https://github.com/purestake/cumulus?branch=nimbus-polkadot-v0.9.9)",
+ "frame-support",
+ "frame-system",
+ "log",
+ "nimbus-primitives",
+ "pallet-author-inherent",
+ "parity-scale-codec",
+ "serde",
+ "sp-core",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
 name = "pallet-authority-discovery"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.9#91061a7d925b5bc597804293da283477512ba4ff"
@@ -5615,7 +5760,7 @@ name = "pallet-getprice"
 version = "3.0.0"
 dependencies = [
  "cumulus-pallet-xcm",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "frame-support",
  "frame-system",
  "log",
@@ -5868,7 +6013,7 @@ name = "pallet-price"
 version = "3.0.0"
 dependencies = [
  "cumulus-pallet-xcm",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "frame-support",
  "frame-system",
  "log",
@@ -6199,7 +6344,7 @@ dependencies = [
 name = "parachain-info"
 version = "0.1.0"
 dependencies = [
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "frame-support",
  "frame-system",
  "parity-scale-codec",
@@ -6801,8 +6946,8 @@ dependencies = [
  "cumulus-client-consensus-relay-chain",
  "cumulus-client-network",
  "cumulus-client-service",
- "cumulus-primitives-core",
- "cumulus-primitives-parachain-inherent",
+ "cumulus-primitives-core 0.1.0",
+ "cumulus-primitives-parachain-inherent 0.1.0",
  "derive_more 0.15.0",
  "exit-future 0.1.4",
  "frame-benchmarking",
@@ -8750,11 +8895,11 @@ version = "0.1.0"
 dependencies = [
  "cumulus-pallet-aura-ext",
  "cumulus-pallet-dmp-queue",
- "cumulus-pallet-parachain-system",
+ "cumulus-pallet-parachain-system 0.1.0",
  "cumulus-pallet-xcm",
  "cumulus-pallet-xcmp-queue",
  "cumulus-ping",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-primitives-timestamp",
  "cumulus-primitives-utility",
  "frame-executive",
@@ -8763,8 +8908,12 @@ dependencies = [
  "hex",
  "hex-literal 0.3.3",
  "log",
+ "nimbus-primitives",
  "pallet-assets",
  "pallet-aura",
+ "pallet-author-inherent",
+ "pallet-author-mapping",
+ "pallet-author-slot-filter",
  "pallet-authorship",
  "pallet-balances",
  "pallet-bounties",
@@ -10329,9 +10478,9 @@ name = "shell-runtime"
 version = "0.1.0"
 dependencies = [
  "cumulus-pallet-dmp-queue",
- "cumulus-pallet-parachain-system",
+ "cumulus-pallet-parachain-system 0.1.0",
  "cumulus-pallet-xcm",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-primitives-utility",
  "frame-executive",
  "frame-support",
@@ -11250,12 +11399,12 @@ version = "2.0.0"
 dependencies = [
  "cumulus-pallet-aura-ext",
  "cumulus-pallet-dmp-queue",
- "cumulus-pallet-parachain-system",
+ "cumulus-pallet-parachain-system 0.1.0",
  "cumulus-pallet-session-benchmarking",
  "cumulus-pallet-xcm",
  "cumulus-pallet-xcmp-queue",
  "cumulus-ping",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-primitives-timestamp",
  "cumulus-primitives-utility",
  "frame-benchmarking",
@@ -11338,12 +11487,12 @@ version = "1.0.0"
 dependencies = [
  "cumulus-pallet-aura-ext",
  "cumulus-pallet-dmp-queue",
- "cumulus-pallet-parachain-system",
+ "cumulus-pallet-parachain-system 0.1.0",
  "cumulus-pallet-session-benchmarking",
  "cumulus-pallet-xcm",
  "cumulus-pallet-xcmp-queue",
  "cumulus-ping",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-primitives-timestamp",
  "cumulus-primitives-utility",
  "frame-benchmarking",
@@ -12381,7 +12530,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "04f8ab788026715fa63b31960869617cba39117e520eb415b0139543e325ab59"
 dependencies = [
  "cfg-if 0.1.10",
- "rand 0.7.3",
+ "rand 0.6.5",
  "static_assertions",
 ]
 
@@ -13064,12 +13213,12 @@ version = "1.0.0"
 dependencies = [
  "cumulus-pallet-aura-ext",
  "cumulus-pallet-dmp-queue",
- "cumulus-pallet-parachain-system",
+ "cumulus-pallet-parachain-system 0.1.0",
  "cumulus-pallet-session-benchmarking",
  "cumulus-pallet-xcm",
  "cumulus-pallet-xcmp-queue",
  "cumulus-ping",
- "cumulus-primitives-core",
+ "cumulus-primitives-core 0.1.0",
  "cumulus-primitives-timestamp",
  "cumulus-primitives-utility",
  "frame-benchmarking",
