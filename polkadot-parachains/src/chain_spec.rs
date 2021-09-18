@@ -299,7 +299,7 @@ fn testnet_genesis(
 		treasury: Default::default(),
 		aura: Default::default(),
 		aura_ext: Default::default(),
-		parachain_system: Default::default(),
+		//parachain_system: Default::default(),
 		vesting: rococo_parachain_runtime::VestingConfig { vesting: vec![] },
 		parachain_staking: ParachainStakingConfig {
 			candidates: candidates

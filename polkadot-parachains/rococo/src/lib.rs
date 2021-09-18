@@ -279,14 +279,25 @@ parameter_types! {
 	pub const ReservedDmpWeight: Weight = MAXIMUM_BLOCK_WEIGHT / 4;
 }
 
+// impl cumulus_pallet_parachain_system::Config for Runtime {
+// 	type Event = Event;
+// 	type OnValidationData = ();
+// 	type SelfParaId = parachain_info::Pallet<Runtime>;
+// 	type OutboundXcmpMessageSource = XcmpQueue;
+// 	type DmpMessageHandler = DmpQueue;
+// 	type ReservedDmpWeight = ReservedDmpWeight;
+// 	type XcmpMessageHandler = XcmpQueue;
+// 	type ReservedXcmpWeight = ReservedXcmpWeight;
+// }
+
 impl cumulus_pallet_parachain_system::Config for Runtime {
 	type Event = Event;
 	type OnValidationData = ();
-	type SelfParaId = parachain_info::Pallet<Runtime>;
-	type OutboundXcmpMessageSource = XcmpQueue;
-	type DmpMessageHandler = DmpQueue;
-	type ReservedDmpWeight = ReservedDmpWeight;
-	type XcmpMessageHandler = XcmpQueue;
+	type SelfParaId = ParachainInfo;
+	type DmpMessageHandler = ();
+	type ReservedDmpWeight = ();
+	type OutboundXcmpMessageSource = ();
+	type XcmpMessageHandler = ();
 	type ReservedXcmpWeight = ReservedXcmpWeight;
 }
 
@@ -570,9 +581,11 @@ construct_runtime! {
 		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Pallet, Storage},
 		TransactionPayment: pallet_transaction_payment::{Pallet, Storage},
 
-		ParachainSystem: cumulus_pallet_parachain_system::{
-			Pallet, Call, Config, Storage, Inherent, Event<T>, ValidateUnsigned,
-		} = 20,
+		//original 
+		// ParachainSystem: cumulus_pallet_parachain_system::{
+		// 	Pallet, Call, Config, Storage, Inherent, Event<T>, ValidateUnsigned,
+		// } = 20,
+		ParachainSystem: cumulus_pallet_parachain_system::{Pallet, Call, Storage, Inherent, Event<T>, ValidateUnsigned,} = 20,
 		ParachainInfo: parachain_info::{Pallet, Storage, Config} = 21,
 		
 
