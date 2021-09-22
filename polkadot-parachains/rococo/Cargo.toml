@@ -42,6 +42,12 @@ pallet-transaction-payment = { git = "https://github.com/paritytech/substrate", 
 pallet-aura = { git = "https://github.com/paritytech/substrate", default-features = false, branch = "polkadot-v0.9.9" }
 
 # Cumulus dependencies
+#cumulus-pallet-parachain-system = { git = "https://github.com/purestake/cumulus", default-features = false, branch = "nimbus-polkadot-v0.9.9" }
+#cumulus-primitives-core = { git = "https://github.com/purestake/cumulus", default-features = false, branch = "nimbus-polkadot-v0.9.9" }
+#parachain-info = { git = "https://github.com/purestake/cumulus", default-features = false, branch = "nimbus-polkadot-v0.9.9" }
+#cumulus-primitives-timestamp = { git = "https://github.com/purestake/cumulus", default-features = false, branch = "nimbus-polkadot-v0.9.9" }
+
+
 cumulus-pallet-aura-ext = { path = "../../pallets/aura-ext", default-features = false }
 cumulus-pallet-parachain-system = { path = "../../pallets/parachain-system", default-features = false }
 cumulus-primitives-core = { path = "../../primitives/core", default-features = false }

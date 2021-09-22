@@ -290,6 +290,17 @@ impl cumulus_pallet_parachain_system::Config for Runtime {
 	type ReservedXcmpWeight = ReservedXcmpWeight;
 }
 
+// impl cumulus_pallet_parachain_system::Config for Runtime {
+// 	type Event = Event;
+// 	type OnValidationData = ();
+// 	type SelfParaId = ParachainInfo;
+// 	type DmpMessageHandler = ();
+// 	type ReservedDmpWeight = ();
+// 	type OutboundXcmpMessageSource = ();
+// 	type XcmpMessageHandler = ();
+// 	type ReservedXcmpWeight = ReservedXcmpWeight;
+// }
+
 impl parachain_info::Config for Runtime {}
 
 impl cumulus_pallet_aura_ext::Config for Runtime {}
@@ -538,11 +549,11 @@ impl parachain_staking::Config for Runtime {
 // 	type CanAuthor = AuthorFilter;
 // }
 
-// impl pallet_author_slot_filter::Config for Runtime {
-// 	type Event = Event;
-// 	type RandomnessSource = RandomnessCollectiveFlip;
-// 	type PotentialAuthors = ParachainStaking;
-// }
+impl pallet_author_slot_filter::Config for Runtime {
+	type Event = Event;
+	type RandomnessSource = RandomnessCollectiveFlip;
+	type PotentialAuthors = ParachainStaking;
+}
 
 parameter_types! {
 	pub const DepositAmount: Balance = 100 * AMAS_UNITS;
@@ -582,7 +593,7 @@ construct_runtime! {
 		//staking
 		ParachainStaking: parachain_staking::{Pallet, Call, Storage, Event<T>, Config<T>} = 32,
 		//AuthorInherent: pallet_author_inherent::{Pallet, Call, Storage, Inherent} = 33,
-		//AuthorFilter: pallet_author_slot_filter::{Pallet, Call, Storage, Event, Config} = 34,
+		AuthorFilter: pallet_author_slot_filter::{Pallet, Call, Storage, Event, Config} = 34,
 		AuthorMapping: pallet_author_mapping::{Pallet, Call, Config<T>, Storage, Event<T>} = 35,
 
 		// Ares the order of these 4 are important and shall not change.
