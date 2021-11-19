@@ -107,8 +107,8 @@ impl_opaque_keys! {
 /// This runtime version.
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("mars"),
-	impl_name: create_runtime_str!("mars"),
+	spec_name: create_runtime_str!("ares-odyssey"),
+	impl_name: create_runtime_str!("ares-odyssey"),
 	authoring_version: 1,
 	spec_version: 14,
 	impl_version: 0,
